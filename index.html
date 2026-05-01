@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FurniQuote</title>
+<title>Local Lift ZA POS</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -27,16 +27,16 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
 .btn-danger{background:var(--danger-bg);color:var(--danger);border:1px solid #f5c6c7}.btn-danger:hover{background:#fbd7d8}
 .btn-sm{padding:6px 12px;font-size:13px}
 .btn-full{width:100%;justify-content:center}
-#app{display:none;flex-direction:column;height:100dvh;overflow:hidden}
+#app{display:none;flex-direction:column;height:100dvh;overflow:hidden;width:100%}
 .demo-banner{background:#0b1a3a;color:#fff;text-align:center;padding:9px 16px;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;flex-shrink:0}
 .demo-tag{background:var(--gold);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
 .demo-count{font-family:'DM Mono',monospace;color:#facc15}
 .mobile-topbar{display:none;align-items:center;gap:10px;padding:10px 16px;background:var(--accent);flex-shrink:0}
 .mobile-topbar-logo{height:36px;width:auto;border-radius:6px;object-fit:contain;display:none}
 .mobile-topbar-name{font-size:15px;font-weight:600;color:#fff}
-.app-inner{display:flex;flex:1;overflow:hidden}
+.app-inner{display:flex;flex-direction:row;flex:1;overflow:hidden;min-height:0}
 .sidebar{width:240px;background:var(--accent);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
-.sidebar-brand{padding:16px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;gap:8px;min-height:88px;justify-content:center}
+.sidebar-brand{padding:16px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;gap:8px;justify-content:center}
 .sidebar-client-logo{max-width:120px;max-height:56px;border-radius:6px;object-fit:contain;display:none}
 .sidebar-biz-name{font-size:13px;font-weight:600;color:#fff;text-align:center;padding:0 8px}
 .nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;margin:2px 8px;border-radius:var(--radius);cursor:pointer;color:rgba(255,255,255,.6);font-size:14px;font-weight:500;transition:all .15s;border:none;background:transparent;width:calc(100% - 16px);text-align:left}
@@ -123,7 +123,8 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
 .bnav-item.active{color:var(--gold)}
 .bnav-item svg{width:20px;height:20px}
 @media(max-width:768px){
-  .sidebar{display:none}.bottom-nav{display:block}.mobile-topbar{display:flex}
+  .sidebar{display:none!important}.bottom-nav{display:block}.mobile-topbar{display:flex}
+  .app-inner{flex-direction:column}
   .main{padding:16px;padding-bottom:80px}
   .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
   .card{padding:14px}
@@ -144,13 +145,13 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
 <div id="app">
   <div class="demo-banner">
     <span class="demo-tag">Demo</span>
-    You are using the demo version of FurniQuote &nbsp;&middot;&nbsp;
+    You are using the demo version of Local Lift ZA POS &nbsp;&middot;&nbsp;
     <span class="demo-count" id="demoCountDisplay">0 / 5 quotes used</span>
     &nbsp;&middot;&nbsp; Contact us to unlock the full version
   </div>
   <div class="mobile-topbar">
     <img class="mobile-topbar-logo" id="mobileLogoImg" src="" alt="Logo"/>
-    <span class="mobile-topbar-name" id="mobileLogoName">FurniQuote</span>
+    <span class="mobile-topbar-name" id="mobileLogoName">Local Lift ZA POS</span>
   </div>
   <div class="app-inner">
     <div class="sidebar">
@@ -159,8 +160,8 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
         <span class="sidebar-biz-name" id="sidebarBizName">LocalLift ZA</span>
       </div>
       <button class="nav-item active" id="nav-billing"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>New Quote</button>
+      <button class="nav-item" id="nav-products"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H8l-2 4h12l-2-4z"/></svg>Products & Services</button>
       <button class="nav-item" id="nav-sales"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v4H3z"/><path d="M3 10h18v4H3z"/><path d="M3 17h18v4H3z"/></svg>Sales History</button>
-      <button class="nav-item" id="nav-products"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3H8l-2 4h12l-2-4z"/></svg>Products</button>
       <button class="nav-item" id="nav-settings"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</button>
       <div class="demo-usage-box">
         <div class="demo-usage-label">Demo usage</div>
@@ -188,7 +189,11 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
           </div>
           <div class="card">
             <div class="card-title">Add item</div>
-            <div class="field-wrap"><label class="field-label">Product</label><select class="inp" id="productSel"></select></div>
+            <div class="field-wrap"><label class="field-label">Product or Service</label><select class="inp" id="productSel"></select></div>
+            <div class="field-wrap">
+              <label class="field-label">Custom item name <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none">(optional &mdash; overrides product above)</span></label>
+              <input class="inp" id="customItemName" placeholder="e.g. 5-Seater Sofa, Installation charge..."/>
+            </div>
             <div class="field-wrap">
               <label class="field-label">Pricing type</label>
               <div class="ptog-wrap">
@@ -217,7 +222,7 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
           <div class="card-title">Quote items</div>
           <div style="overflow-x:auto">
             <table class="tbl">
-              <thead><tr><th>Product</th><th>Details</th><th>Qty</th><th>Unit price</th><th>Total</th><th></th></tr></thead>
+              <thead><tr><th>Product or Service</th><th>Details</th><th>Qty</th><th>Unit price</th><th>Total</th><th></th></tr></thead>
               <tbody id="itemsBody"></tbody>
             </table>
           </div>
@@ -264,10 +269,10 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
 
       <!-- PRODUCTS -->
       <div id="products" class="page">
-        <div class="page-header"><h2>Products</h2><p>Manage your furniture catalogue and pricing</p></div>
+        <div class="page-header"><h2>Products & Services</h2><p>Manage your Products or Services Catalogue and pricing</p></div>
         <div class="grid-2">
           <div class="card">
-            <div class="card-title">Add product</div>
+            <div class="card-title">Add Product or Services</div>
             <div class="field-wrap"><label class="field-label">Product name</label><input class="inp" id="pName" placeholder="e.g. 3-Seater Sofa"/></div>
             <div class="field-wrap">
               <label class="field-label">Pricing type</label>
@@ -278,9 +283,9 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
             </div>
             <div class="field-wrap"><label class="field-label" id="pPriceLabel">Price (R)</label><input class="inp" id="pPrice" placeholder="e.g. 8500" type="number" min="0"/></div>
             <div class="field-wrap"><label class="field-label">Category (optional)</label><input class="inp" id="pCategory" placeholder="e.g. Sofas, Beds"/></div>
-            <button class="btn btn-primary" id="addProductBtn">+ Add product</button>
+            <button class="btn btn-primary" id="addProductBtn">+ Add to catelogue</button>
           </div>
-          <div class="card"><div class="card-title">Product catalogue</div><div id="productList"></div></div>
+          <div class="card"><div class="card-title">Product & Service catalogue</div><div id="productList"></div></div>
         </div>
       </div>
 
@@ -321,7 +326,7 @@ button,input,select,textarea{font-family:'DM Sans',sans-serif;cursor:pointer}
                   <p>&#128205; Johannesburg, South Africa</p>
                   <p>&#128222; <a href="tel:+27638557681">063 855 7681</a></p>
                   <p>&#9993;&#65039; <a href="mailto:locallift.za@gmail.com">locallift.za@gmail.com</a></p>
-                  <p>&#128242; <a href="https://wa.me/27638557681?text=Hi LocalLift ZA, I need support." target="_blank">WhatsApp us</a></p>
+                  <p>&#128242; <a href="https://wa.me/27638557681?text=Hi Local Lift ZA, Can you help me?." target="_blank">WhatsApp us</a></p>
                 </div>
               </div>
             </div>
@@ -414,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('ptog-dim').addEventListener('click', function() { toggleProductPricing('dim'); });
   document.getElementById('editTog-fixed').addEventListener('click', function() { setEditPricingType('fixed'); });
   document.getElementById('editTog-dim').addEventListener('click', function() { setEditPricingType('dim'); });
-  ['blength','bbreadth','bqty','fqty','fUnitPrice','productSel'].forEach(function(id) {
+  ['blength','bbreadth','bqty','fqty','fUnitPrice','productSel','customItemName'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.addEventListener('input', updatePreview);
   });
   document.getElementById('productSel').addEventListener('change', function() {
@@ -617,45 +622,61 @@ function saveEditProduct() {
 }
 
 function updatePreview() {
-  var pName=document.getElementById('productSel').value;
-  var p=products.find(function(x){ return x.name===pName; });
-  var el=document.getElementById('itemPreview');
-  if (!p) { el.textContent=''; return; }
+  var customName = document.getElementById('customItemName').value.trim();
+  var pName = customName || document.getElementById('productSel').value;
+  var p = products.find(function(x){ return x.name===document.getElementById('productSel').value; });
+  var el = document.getElementById('itemPreview');
   if (currentPricingType==='fixed') {
     var q=parseInt(document.getElementById('fqty').value)||1;
     var ov=parseFloat(document.getElementById('fUnitPrice').value);
-    var up=isNaN(ov)?p.price:ov;
-    el.textContent=q+' × R'+up+' = R'+(q*up).toFixed(2);
+    var up = isNaN(ov) ? (p ? p.price : 0) : ov;
+    if (!up && customName) { el.innerHTML='<span style="color:var(--danger);font-size:12px">Enter a unit price override for custom items</span>'; return; }
+    if (!p && !customName) { el.textContent=''; return; }
+    el.textContent=(customName ? 'Custom item: ' : '')+q+' × R'+up+' = R'+(q*up).toFixed(2);
   } else {
     var l=parseFloat(document.getElementById('blength').value);
     var b=parseFloat(document.getElementById('bbreadth').value);
     var q2=parseInt(document.getElementById('bqty').value)||1;
+    if (!p && !customName) { el.textContent=''; return; }
+    var rate = p ? p.price : 0;
+    var ov2=parseFloat(document.getElementById('fUnitPrice').value);
+    if (!isNaN(ov2)) rate=ov2;
+    if (!rate && customName) { el.innerHTML='<span style="color:var(--danger);font-size:12px">Enter a unit price override for custom items</span>'; return; }
     if (!l||!b) { el.textContent=''; return; }
-    el.textContent=(l*b).toFixed(2)+' m² × R'+p.price+'/m² × '+q2+' = R'+(l*b*p.price*q2).toFixed(2);
+    el.textContent=(customName ? 'Custom item: ' : '')+(l*b).toFixed(2)+' m² × R'+rate+'/m² × '+q2+' = R'+(l*b*rate*q2).toFixed(2);
   }
 }
 
 function addItem() {
-  var pName=document.getElementById('productSel').value;
-  var p=products.find(function(x){ return x.name===pName; }); if (!p) { toast('Select a product'); return; }
+  var customName = document.getElementById('customItemName').value.trim();
+  var pName = document.getElementById('productSel').value;
+  var p = products.find(function(x){ return x.name===pName; });
+  if (!customName && !p) { toast('Select a product or enter a custom item name'); return; }
+  var itemName = customName || p.name;
   var item;
   if (currentPricingType==='fixed') {
     var q=parseInt(document.getElementById('fqty').value)||1;
     var ov=parseFloat(document.getElementById('fUnitPrice').value);
-    var up=isNaN(ov)?p.price:ov;
+    var up = isNaN(ov) ? (p ? p.price : 0) : ov;
+    if (!up) { toast('Enter a unit price for this item'); return; }
     if (q<1) { toast('Enter a valid quantity'); return; }
-    item={name:p.name,details:'Fixed price',qty:q,unitPrice:up,total:parseFloat((q*up).toFixed(2)),pricingType:'fixed'};
+    item={name:itemName,details:'Fixed price',qty:q,unitPrice:up,total:parseFloat((q*up).toFixed(2)),pricingType:'fixed'};
   } else {
     var l=parseFloat(document.getElementById('blength').value);
     var b=parseFloat(document.getElementById('bbreadth').value);
     var q2=parseInt(document.getElementById('bqty').value)||1;
     if (!l||!b||!q2) { toast('Enter valid dimensions and quantity'); return; }
+    var ov2=parseFloat(document.getElementById('fUnitPrice').value);
+    var rate = isNaN(ov2) ? (p ? p.price : 0) : ov2;
+    if (!rate) { toast('Enter a rate per m² for this item'); return; }
     var area=parseFloat((l*b).toFixed(4));
-    item={name:p.name,details:l+'m × '+b+'m ('+area.toFixed(2)+' m²)',qty:q2,unitPrice:p.price,total:parseFloat((area*p.price*q2).toFixed(2)),pricingType:'dim'};
+    item={name:itemName,details:l+'m × '+b+'m ('+area.toFixed(2)+' m²)',qty:q2,unitPrice:rate,total:parseFloat((area*rate*q2).toFixed(2)),pricingType:'dim'};
   }
   items.push(item); generated=false; renderItems();
   ['fqty','fUnitPrice','blength','bbreadth','bqty'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
-  document.getElementById('itemPreview').textContent=''; toast('Item added');
+  document.getElementById('customItemName').value='';
+  document.getElementById('itemPreview').textContent='';
+  toast('Item added');
 }
 
 function removeItem(idx) { items.splice(idx,1); generated=false; renderItems(); }
@@ -739,7 +760,7 @@ function downloadPDF() {
   doc.text('TOTAL',135,y); doc.text('R '+gt,170,y); doc.setTextColor(0,0,0);
   if(biz.terms){y+=20;doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('TERMS & CONDITIONS',14,y);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.text(doc.splitTextToSize(biz.terms,182),14,y+5);}
   var pageH=doc.internal.pageSize.height;
-  var tyMsg=biz.thankYou||'Thank you for choosing us! We look forward to furnishing your space beautifully.';
+  var tyMsg=biz.thankYou||'Thank you for your business! We look forward to working with you.';
   doc.setDrawColor(184,151,42); doc.setLineWidth(0.4); doc.line(14,pageH-24,196,pageH-24);
   doc.setFillColor(27,47,110); doc.rect(14,pageH-22,182,14,'F');
   doc.setFillColor(184,151,42); doc.rect(14,pageH-22,4,14,'F');
@@ -769,7 +790,7 @@ function updateDemoUI() {
 function showLockScreen() { updateDemoUI(); document.getElementById('lockScreen').classList.add('open'); }
 
 function sendWhatsAppUnlock() {
-  var msg='Hi! I have been using the FurniQuote demo and I would like to unlock the full version. Please assist.';
+  var msg='Hi! I have been using the Local Lift ZA POS demo and I would like to unlock the full version. Please assist.';
   window.open('https://wa.me/27638557681?text='+encodeURIComponent(msg));
 }
 
